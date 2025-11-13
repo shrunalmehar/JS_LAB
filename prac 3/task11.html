@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head><title>Task 11 - Guess Again</title></head>
+<body>
+  <script>
+    const randomNumber = Math.floor(Math.random() * 10) + 1;
+    let guess;
+    console.log("Guess the number between 1 and 10");
+    do {
+      guess = parseInt(prompt("Guess the number (1 to 10):"));
+      if (guess > randomNumber) console.log("Too high!");
+      else if (guess < randomNumber) console.log("Too low!");
+      else console.log("Correct!");
+    } while (guess !== randomNumber);
+  </script>
+</body>
+</html>
+

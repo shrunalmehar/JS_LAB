@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function secretMessage(password) {
+  let secret = "The exam is on Monday!";
+
+  return function(givenPassword) {
+    if (givenPassword === password) {
+      return secret;
+    } else {
+      return "Access Denied!";
+    }
+  };
+}
+let getSecret = secretMessage("1234");
+console.log(getSecret("1234")); 
+console.log(getSecret("1111")); 
+    </script>
+</body>
+</html>

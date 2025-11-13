@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Session Form Auto-Save</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 40px;
+      max-width: 500px;
+      margin: auto;}
+    h2 {
+      color: #333;
+      text-align: center;}
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;}
+    input, textarea, button {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;}
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      border: none;}
+    button:hover {
+      background-color: #0056b3;}
+  </style>
+</head>
+<body>
+  <h2>Contact Form (Session Auto-Save)</h2>
+  <form id="contactForm">
+    <input type="text" id="name" placeholder="Enter your name">
+    <input type="email" id="email" placeholder="Enter your email">
+    <textarea id="message" rows="4" placeholder="Your message"></textarea>
+    <button type="button" onclick="clearForm()">Clear Form</button>
+  </form>
+  <script>
+    const fields = ["name", "email", "message"];
+    window.onload = function() {
+      fields.forEach(id => {
+        const savedValue = sessionStorage.getItem(id);
+        if (savedValue) {
+          document.getElementById(id).value = savedValue;
+        }
+      });
+    };
+    fields.forEach(id => {
+      document.getElementById(id).addEventListener("input", (e) => {
+        sessionStorage.setItem(id, e.target.value);
+      });
+    });
+    function clearForm() {
+      fields.forEach(id => {
+        document.getElementById(id).value = "";
+        sessionStorage.removeItem(id);
+      });
+      alert("Form and session data cleared!");
+    }
+  </script>
+</body>
+</html>

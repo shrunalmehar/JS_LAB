@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Theme & Font Size Switcher</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      transition: background-color 0.5s, color 0.5s, font-size 0.3s;
+    }
+    .dark {
+      background-color: #121212;
+      color: white;
+    }
+    .light {
+      background-color: #ffffff;
+      color: black;
+    }
+    .small { font-size: 14px; }
+    .medium { font-size: 18px; }
+    .large { font-size: 22px; }
+    button, select {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    select {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Theme & Font Size Switcher</h1>
+  <button id="toggleTheme">Toggle Theme</button>
+  <br>
+  <label for="fontSize">Select Font Size:</label>
+  <select id="fontSize">
+    <option value="small">Small</option>
+    <option value="medium">Medium</option>
+    <option value="large">Large</option>
+  </select>
+
+  <script>
+    const body = document.body;
+    const btn = document.getElementById("toggleTheme");
+    const fontSizeSelect = document.getElementById("fontSize");
+    const savedTheme = localStorage.getItem("theme") || "light";
+    const savedFontSize = localStorage.getItem("fontSize") || "medium";
+    body.classList.add(savedTheme);
+    body.classList.add(savedFontSize);
+    fontSizeSelect.value = savedFontSize;
+    btn.textContent = savedTheme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode";
+    btn.addEventListener("click", () => {
+      const newTheme = body.classList.contains("dark") ? "light" : "dark";
+      body.classList.remove("light", "dark");
+      body.classList.add(newTheme);
+      localStorage.setItem("theme", newTheme);
+      btn.textContent = newTheme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode";
+    });
+    fontSizeSelect.addEventListener("change", () => {
+      const newSize = fontSizeSelect.value;
+      body.classList.remove("small", "medium", "large");
+      body.classList.add(newSize);
+      localStorage.setItem("fontSize", newSize);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Chatbot (Beginner Version)</title>
+</head>
+<body>
+  <script>
+    let score = parseInt(prompt("How are you feeling? (Enter a number from -10 to 10):"));
+    let keyword = prompt("Use one word to describe how you feel (e.g., tired, excited, confused):");
+    
+    let response = "";
+
+    if (score === 0 && keyword === "") {
+      response = "I'm not sure how you're feeling. Want to talk about it?";
+    } else if (score >= 6 && keyword === "tired") {
+      response = "You seem happy but also tired.";
+    } else if (score >= 6 && keyword === "excited") {
+      response = "You're really excited! I love your energy!";
+    } else if (score <= -3 && keyword === "confused") {
+      response = "You sound confused. It's okay.";
+    } else if (score < 0 && keyword === "tired") {
+      response = "You must be tired. Please rest and take care.";
+    } else if (score === 0 && keyword === "confused") {
+      response = "You feel unsure. Let’s figure it out together.";
+    } else if (score <= -7) {
+      response = "You seem really down. I'm here for you if you want to talk.";
+    } else if (score >= 7) {
+      response = "You're in a great mood!";
+    } else {
+      response = "Thanks for sharing.";
+    }
+    console.log(response);
+  </script>
+</body>
+</html>

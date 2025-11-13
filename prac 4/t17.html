@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function createBankAccount(initialBalance) {
+  let balance = initialBalance;
+
+  return {
+    deposit: (amount) => balance += amount,
+    withdraw: (amount) => balance -= amount,
+    checkBalance: () => balance
+  };
+}
+
+let myAccount = createBankAccount(100);
+console.log(myAccount.deposit(50));
+console.log(myAccount.withdraw(20));
+console.log(myAccount.checkBalance());
+    </script>
+</body>
+</html>

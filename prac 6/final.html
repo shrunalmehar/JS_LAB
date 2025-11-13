@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+  <title>Smart Resume Data Extractor</title>
+</head>
+<body>
+<script>
+function formatName(rawName) {
+  if (!rawName) return "";
+  return rawName.trim().replace(/\s+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+}
+
+function extractEmails(text) {
+  const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g;
+  const matches = text.match(emailRegex) || [];
+  return matches.map(e => e.toLowerCase());
+}
+
+function validateMobile(number) {
+  if (!number) return 'Invalid phone number';
+  const cleaned = number.toString().trim().replace(/[^0-9]/g, '');
+  const mobileRegex = /^[6-9]\d{9}$/;
+  return mobileRegex.test(cleaned) ? cleaned : 'Invalid phone number';
+}
+
+function processSkills(rawSkills) {
+  if (!rawSkills) return [];
+  return rawSkills.split(',').map(s => s.trim()).filter(s => s.length > 0);
+}
+
+function extractHashtags(text) {
+  const tagRegex = /#[A-Za-z0-9_]+/g;
+  return text.match(tagRegex) || [];
+}
+
+function countWords(text) {
+  const words = text.match(/\b[\w']+\b/g) || [];
+  return words.length;
+}
+
+function countVowels(text) {
+  const vowels = text.match(/[aeiou]/gi) || [];
+  return vowels.length;
+}
+
+function processResume(resumeText) {
+  const output = {};
+  const nameMatch = resumeText.match(/Name:\s*(.+)/i);
+  output.name = nameMatch ? formatName(nameMatch[1]) : '';
+  const emails = extractEmails(resumeText);
+  output.email = emails[0] || '';
+  output.emailCount = emails.length;
+  const phoneMatch = resumeText.match(/Phone:\s*([0-9\-\s()+]+)/i);
+  output.phone = phoneMatch ? validateMobile(phoneMatch[1]) : 'Invalid phone number';
+  const skillsMatch = resumeText.match(/Skills:\s*(.+)/i);
+  output.skills = skillsMatch ? processSkills(skillsMatch[1]) : [];
+  output.hashtags = extractHashtags(resumeText);
+  output.wordCount = countWords(resumeText);
+  output.vowelCount = countVowels(resumeText);
+  return output;
+}
+
+let resume = `
+Random Text: Ignore this line
+Name: keVin o'CONNOR
+Email: kevin.oConnor@Mail.com
+Phone: 7894561230
+Skills: Python, Machine Learning, Data Science , AI
+Extra Notes: You can also contact: kevin.backup123@mail.org
+#AI #MachineLearning #DataScience #coder
+`;
+
+console.log(processResume(resume));
+</script>
+</body>
+</html>

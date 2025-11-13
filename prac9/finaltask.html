@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Personal Dashboard</title>
+<style>
+body{
+  font-family: Verdana, sans-serif;
+  text-align:center;
+  padding:20px;
+  transition:0.3s ease;
+}
+.light{background-color:white;color:black;}
+.dark{background-color:#121212;color:white;}
+button,select{
+  margin:6px;
+  padding:8px 14px;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<h1 id="welcomeText">Hi there!</h1>
+
+<div id="controls">
+  <input type="text" id="nameBox" placeholder="Enter your name">
+  <button id="saveBtn">Save Name</button>
+  <button id="themeBtn">Change Theme</button>
+  <select id="fontSel">
+    <option value="small">Small</option>
+    <option value="medium">Medium</option>
+    <option value="large">Large</option>
+  </select>
+  <button id="resetBtn">Reset Preferences</button>
+</div>
+
+<p id="counter"></p>
+
+<h3>Feedback</h3>
+<textarea id="fbBox" rows="5" cols="40" placeholder="Write your feedback..."></textarea>
+
+<script>
+let theme = localStorage.getItem("themeMode");
+if(!theme){ theme = "light"; }
+document.body.classList.add(theme);
+
+document.getElementById("themeBtn").onclick = function(){
+  let newTheme = document.body.classList.contains("light") ? "dark" : "light";
+  document.body.classList.remove("light","dark");
+  document.body.classList.add(newTheme);
+  localStorage.setItem("themeMode", newTheme);
+}
+
+let fontSel = document.getElementById("fontSel");
+let fontMap = {small:"14px",medium:"18px",large:"22px"};
+let savedFont = localStorage.getItem("fontSizePref");
+if(savedFont){
+  document.body.style.fontSize = fontMap[savedFont];
+  fontSel.value = savedFont;
+}
+fontSel.onchange = function(){
+  let f = fontSel.value;
+  document.body.style.fontSize = fontMap[f];
+  localStorage.setItem("fontSizePref", f);
+}
+
+let storedUser = localStorage.getItem("username");
+if(storedUser){
+  document.getElementById("welcomeText").innerText = "Welcome back, " + storedUser + "!";
+  document.getElementById("nameBox").value = storedUser;
+}
+document.getElementById("saveBtn").onclick = function(){
+  let u = document.getElementById("nameBox").value;
+  localStorage.setItem("username", u);
+  document.getElementById("welcomeText").innerText = "Welcome, " + u + "!";
+}
+
+let visit = sessionStorage.getItem("visits");
+visit = visit ? Number(visit) + 1 : 1;
+sessionStorage.setItem("visits", visit);
+document.getElementById("counter").innerText = "You refreshed this tab " + visit + " times.";
+
+let fbBox = document.getElementById("fbBox");
+let fbSaved = sessionStorage.getItem("feedbackText");
+if(fbSaved) fbBox.value = fbSaved;
+fbBox.addEventListener("input", function(){
+  sessionStorage.setItem("feedbackText", fbBox.value);
+});
+
+document.getElementById("resetBtn").onclick = function(){
+  localStorage.clear();
+  location.reload();
+}
+</script>
+</body>
+</html>
+

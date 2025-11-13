@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Storage Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;}
+    h2 {
+      color: #333;}
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;}
+    button {
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      transition: 0.2s;}
+    button:hover {
+      background-color: #0056b3;}
+    #output {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #333;}
+  </style>
+</head>
+<body>
+  <h2>Web Storage Demo</h2>
+  <input type="text" id="username" placeholder="Enter your name">
+  <button onclick="saveData()">Save</button>
+  <button onclick="loadData()">Load</button>
+  <button onclick="clearData()">Clear</button>
+  <p id="output"></p>
+  <script>
+    function saveData() {
+      let name = document.getElementById("username").value.trim();
+      if (name === "") {
+        alert("Please enter your name!");
+        return;
+      }
+      localStorage.setItem("userName", name);
+      sessionStorage.setItem("sessionName", name);
+      alert("Data saved successfully!");
+    }
+    function loadData() {
+      let localName = localStorage.getItem("userName");
+      let sessionName = sessionStorage.getItem("sessionName");
+      document.getElementById("output").innerHTML =
+        `LocalStorage: ${localName ? localName : "No data"} <br>
+         SessionStorage: ${sessionName ? sessionName : "No data"}`;
+    }
+    function clearData() {
+      localStorage.clear();
+      sessionStorage.clear();
+      document.getElementById("output").innerHTML = "🧹 Storage cleared!";
+    }
+    window.onload = function() {
+      let savedName = localStorage.getItem("userName");
+      if (savedName) {
+        document.getElementById("username").value = savedName;
+        document.getElementById("output").innerHTML = 
+          `Welcome back, ${savedName}! (loaded from Local Storage)`;
+      }
+    };
+  </script>
+</body>
+</html>

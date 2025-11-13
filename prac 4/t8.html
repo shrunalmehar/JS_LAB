@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Square Root</title>
+</head>
+<body>
+  <h2>Square Root with Error Handling</h2>
+  <input type="text" id="num" placeholder="Enter a number">
+  <button onclick="getSqrt()">Find √</button>
+  <p id="output"></p>
+
+  <script>
+    function safeSqrt(val) {
+      try {
+        const n = Number(val);
+        if (isNaN(n)) throw "Not a number!";
+        if (n < 0) throw "Negative number!";
+        return Math.sqrt(n);
+      } catch (err) {
+        return "Error: " + err;
+      }
+    }
+
+    function getSqrt() {
+      const val = document.getElementById('num').value;
+      document.getElementById('output').textContent = "Result: " + safeSqrt(val);
+    }
+  </script>
+</body>
+</html>

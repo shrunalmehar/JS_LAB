@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function randomNumber() {
+  return Math.floor(Math.random() * 100);
+}
+
+const isPrime = function(num) {
+  if (num <= 1) return false;
+  for (let i = 2; i <= Math.sqrt(num); i++) {
+    if (num % i === 0) return false;
+  }
+  return true;
+};
+
+const printPrimeStatus = (num) => {
+  if (isPrime(num)) {
+    console.log("Prime");
+  } else {
+    console.log("Not Prime");
+  }
+};
+
+let num = randomNumber();
+console.log("Number:", num);
+printPrimeStatus(num);
+    </script>
+</body>
+</html>

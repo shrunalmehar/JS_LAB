@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task3</title>
+</head>
+<body><script>
+    const analyzeData = (input) => {
+  let type = "unknown";
+  let mutable = false;
+
+  if (input === null) {
+    type = "null";
+  } else if (Array.isArray(input)) {
+    type = "array";
+    mutable = true;
+  } else if (input instanceof Function) {
+    type = "function";
+  } else if (input instanceof String || Object.prototype.toString.call(input) === "[object String]") {
+    type = "string";
+  } else if (input instanceof Number || Object.is(input, +input)) {
+    type = "number";
+  } else if (input === true || input === false || input instanceof Boolean) {
+    type = "boolean";
+  } else if (input instanceof Object) {
+    type = "object";
+    mutable = true;
+  } else if (typeof Symbol !== "undefined" && Object.prototype.toString.call(input) === "[object Symbol]") {
+    type = "symbol";
+  } else if (typeof BigInt !== "undefined" && input === BigInt(input)) {
+    type = "bigint";
+  } else if (input === undefined) {
+    type = "undefined";
+  }
+
+  const immutableTypes = ["string", "number", "boolean", "null", "undefined", "symbol", "bigint"];
+  if (!mutable && !immutableTypes.includes(type)) {
+    mutable = true;
+  }
+
+  console.log(`Type: ${type}`);
+  console.log(`Mutable: ${mutable ? "Yes" : "No"}`);
+  console.log(`Summary: The input is a ${type} and it is ${mutable ? "mutable" : "immutable"}.\n`);
+};
+
+analyzeData("Hello");
+analyzeData(42);
+analyzeData(true);
+analyzeData([1, 2]);
+analyzeData({ key: "value" });
+analyzeData(null);
+analyzeData(undefined);
+analyzeData(function () {});
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task 2: Add/Delete from List</title>
+</head>
+<body>
+  <input type="text" id="itemInput">
+  <button id="addBtn">Add</button>
+  <ul id="taskList"></ul>
+  <script>
+    document.getElementById('addBtn').onclick = function() {
+      let val = document.getElementById('itemInput').value;
+      if (val) {
+        let li = document.createElement('li');
+        li.textContent = val;
+        let del = document.createElement('button');
+        del.textContent = 'Delete';
+        del.onclick = function() { li.remove(); };
+        li.appendChild(del);
+        document.getElementById('taskList').appendChild(li);
+        document.getElementById('itemInput').value = '';
+      }
+    };
+  </script>
+</body>
+</html>

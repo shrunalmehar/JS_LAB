@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Practical 5</title>
+</head>
+<body>
+  <script>
+    let studentAges = [18, 20, 19, 22, 21];
+    console.log("Original Ages:", studentAges);
+
+    studentAges.push(23);
+    console.log("After push(23):", studentAges);
+
+    studentAges.pop();
+    console.log("After pop():", studentAges);
+
+    console.log("Array length:", studentAges.length);
+
+    let doubleAges = studentAges.map(age => age * 2);
+    console.log("Double Ages:", doubleAges);
+
+    let cubeAges = studentAges.map(age => age ** 3);
+    console.log("Cube of Ages:", cubeAges);
+  </script>
+</body>
+</html>

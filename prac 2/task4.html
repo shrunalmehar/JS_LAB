@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task4</title>
+</head>
+<body>
+    <script>
+        const colors1 = ["red", "green"];
+const colors2 = ["blue", "yellow"];
+
+const palette = [...colors1, ...colors2];
+
+const [firstColor, ...restColors] = palette;
+const lastColor = restColors.pop(); 
+const middleColors = restColors;
+
+const capitalize = color => color.charAt(0).toUpperCase() + color.slice(1);
+
+const message = `Main colors: ${capitalize(firstColor)} and ${capitalize(lastColor)}. Others in the palette: ${middleColors.map(capitalize).join(", ") || "None"}.`;
+
+console.log(message);
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+function reverseNumber(num)
+{
+if (typeof num !== "number" || isNaN(num))
+{
+throw new Error("Invalid number input");
+}
+return parseInt(num.toString().split("").reverse().join(""));
+}
+function isPalindrome(num) {
+return num === reverseNumber(num);
+}
+try {
+let num = 1221;
+console.log("Reversed:", reverseNumber(num));
+console.log("Is Palindrome:", isPalindrome(num));
+} catch (err) {
+console.log("Error:", err.message);
+}
+    </script>
+</body>
+</html>

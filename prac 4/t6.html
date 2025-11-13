@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reverse Number</title>
+</head>
+<body>
+  <h2>Reverse Number (with negatives)</h2>
+  <input type="number" id="num" placeholder="Enter a number">
+  <button onclick="showReverse()">Reverse</button>
+  <p id="output"></p>
+
+  <script>
+    // Optimized: single pass, no unnecessary parsing
+    function reverseNumber(n) {
+      const str = Math.abs(n).toString().split('').reverse().join('');
+      return n < 0 ? -Number(str) : Number(str);
+    }
+
+    function showReverse() {
+      const val = document.getElementById('num').value;
+      if (val === "") return document.getElementById('output').textContent = "Please enter a number!";
+      document.getElementById('output').textContent = "Reversed: " + reverseNumber(Number(val));
+    }
+  </script>
+</body>
+</html>

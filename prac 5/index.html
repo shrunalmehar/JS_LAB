@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Practical 5 – Cart Total Calculator</title>
+</head>
+<body>
+  <script>
+    let cart = [
+      { id: 1, name: "Pen", price: 20, qty: 2, category: "stationery" },
+      { id: 2, name: "Mug", price: 150, qty: 1, category: "kitchen" },
+      { id: 3, name: "Notebook", price: 80, qty: 3, category: "stationery" },
+      { id: 4, name: "USB Cable", price: 100, qty: 1, category: "electronics" }
+    ];
+
+    let itemTotals = cart.map(item => item.price * item.qty);
+
+    let discountedItemTotals = cart.map(item => {
+      let subtotal = item.price * item.qty;
+      if (item.qty >= 3) {
+        subtotal -= subtotal * 0.05; // 5% discount
+      }
+      return subtotal;
+    });
+
+    let totalBeforeItemDiscounts = itemTotals.reduce((sum, val) => sum + val, 0);
+    let totalAfterItemDiscounts = discountedItemTotals.reduce((sum, val) => sum + val, 0);
+    let itemDiscounts = totalBeforeItemDiscounts - totalAfterItemDiscounts;
+
+    let stationeryItems = cart.filter(item => item.category === "stationery");
+    let stationeryTotal = stationeryItems.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+    let stationeryDiscount = 0;
+    if (stationeryTotal > 200) {
+      stationeryDiscount = stationeryTotal * 0.10;
+    }
+
+    let subtotal = totalBeforeItemDiscounts;
+    let finalTotal = subtotal - itemDiscounts - stationeryDiscount;
+
+    console.log("Receipt:");
+    cart.forEach(item => {
+      let subtotal = item.price * item.qty;
+      let line = `Item: ${item.name} (x${item.qty}) = ${subtotal}`;
+      if (item.qty >= 3) {
+        line += " → discount applied";
+      }
+      console.log(line);
+    });
+
+    console.log("---------------------------------");
+    console.log("Subtotal:", subtotal.toFixed(2));
+    console.log("Item Discounts:", itemDiscounts.toFixed(2));
+    console.log("Stationery Discount:", stationeryDiscount.toFixed(2));
+    console.log("Final Total:", finalTotal.toFixed(2));
+  </script>
+</body>
+</html>

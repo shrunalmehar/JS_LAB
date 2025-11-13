@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Campus Club Performance Tracker</title>
+  <style>
+    body { 
+      font-family: Arial; 
+      background: #f0f0f0; 
+      padding: 20px; 
+    }
+    h1 { 
+      text-align: center; 
+    }
+    .team { 
+      background: white; 
+      padding: 15px; 
+      margin: 15px auto; 
+      border-radius: 10px; 
+      width: 80%; 
+      box-shadow: 0 0 5px gray; 
+    }
+    .highlight { 
+      box-shadow: 0 0 20px orange; 
+      animation: glow 1s infinite alternate; 
+    }
+    @keyframes glow { 
+      from { box-shadow: 0 0 10px gold; } 
+      to { box-shadow: 0 0 25px orange; } 
+    }
+    .output { 
+      background: #eee; 
+      padding: 10px; 
+      margin-top: 10px; 
+      border-radius: 8px; 
+    }
+    footer { 
+      text-align: center; 
+      margin-top: 30px; 
+      font-size: 14px; 
+    }
+  </style>
+</head>
+<body>
+  <h1>Campus Club Performance Tracker</h1>
+
+  <div class="team" id="team1">
+    <h2>Team 1</h2>
+    <label>Team Name:</label>
+    <input type="text" id="name1" value="Shlok Vij"><br>
+    <label>Team ID (PRN):</label>
+    <input type="number" id="id1" value="143"><br>
+    <label>Round 1 Score:</label>
+    <input type="range" id="r1_1" min="0" max="100"><br>
+    <label>Round 2 Score:</label>
+    <input type="number" id="r2_1"><br>
+    <label>Round 3 Category:</label>
+    <select id="cat1"></select>
+    <div class="output" id="out1"></div>
+  </div>
+
+  <div class="team" id="team2">
+    <h2>Team 2</h2>
+    <label>Team Name:</label>
+    <input type="text" id="name2" value="Shreya Bansal"><br>
+    <label>Team ID (PRN):</label>
+    <input type="number" id="id2" value="144"><br>
+    <label>Round 1 Score:</label>
+    <input type="range" id="r1_2" min="0" max="100"><br>
+    <label>Round 2 Score:</label>
+    <input type="number" id="r2_2"><br>
+    <label>Round 3 Category:</label>
+    <select id="cat2"></select>
+    <div class="output" id="out2"></div>
+  </div>
+
+  <div class="team" id="team3">
+    <h2>Team 3</h2>
+    <label>Team Name:</label>
+    <input type="text" id="name3" value="Shreya Gholase"><br>
+    <label>Team ID (PRN):</label>
+    <input type="number" id="id3" value="145"><br>
+    <label>Round 1 Score:</label>
+    <input type="range" id="r1_3" min="0" max="100"><br>
+    <label>Round 2 Score:</label>
+    <input type="number" id="r2_3"><br>
+    <label>Round 3 Category:</label>
+    <select id="cat3"></select>
+    <div class="output" id="out3"></div>
+  </div>
+
+  <button onclick="calculate()">Submit & Calculate</button>
+  <footer id="footer"></footer>
+
+  <script>
+    var categories = ["Innovation", "Teamwork", "Creativity", "Leadership"];
+
+    function fillDropdowns() {
+      var selects = [
+        document.getElementById("cat1"), 
+        document.getElementById("cat2"), 
+        document.getElementById("cat3")
+      ];
+      categories.sort(() => Math.random() - 0.5);
+      for (var s of selects) {
+        s.innerHTML = "";
+        for (var c of categories) {
+          var opt = document.createElement("option");
+          opt.value = c;
+          opt.text = c;
+          s.add(opt);
+        }
+      }
+    }
+    fillDropdowns();
+
+    var w1 = 0.3, w2 = 0.4, w3 = 0.3;
+
+    function calculate() {
+      var teams = [];
+
+      for (var i = 1; i <= 3; i++) {
+        var name = document.getElementById("name" + i).value;
+        var id = document.getElementById("id" + i).value;
+        var r1 = parseInt(document.getElementById("r1_" + i).value);
+        var r2 = parseInt(document.getElementById("r2_" + i).value);
+        var cat = document.getElementById("cat" + i).value;
+
+        if (r1 < 0 || r1 > 100 || r2 < 0 || r2 > 100) { 
+          alert("Scores must be 0-100!"); 
+          return; 
+        }
+
+        var r3 = 80;
+        var total = r1 * w1 + r2 * w2 + r3 * w3;
+
+        if (r2 > 80) total += 5;
+        if (cat === "Innovation") total += 3;
+
+        var grade;
+        if (total >= 90) grade = "A";
+        else if (total >= 75) grade = "B";
+        else if (total >= 60) grade = "C";
+        else grade = "F";
+
+        var remark;
+        switch (grade) {
+          case "A": remark = "Outstanding"; break;
+          case "B": remark = "Strong"; break;
+          case "C": remark = "Average"; break;
+          case "F": remark = "Needs Improvement"; break;
+        }
+
+        teams.push({name, id, total, grade, remark, box: "out" + i, card: "team" + i});
+      }
+
+      teams.sort(function(a, b) {
+        if (b.total !== a.total) return b.total - a.total;
+        return a.name.localeCompare(b.name);
+      });
+
+      document.getElementById("team1").classList.remove("highlight");
+      document.getElementById("team2").classList.remove("highlight");
+      document.getElementById("team3").classList.remove("highlight");
+
+      document.getElementById(teams[0].card).classList.add("highlight");
+
+      for (var t of teams) {
+        document.getElementById(t.box).innerHTML =
+          "Name: " + t.name + "<br>" +
+          "ID: " + t.id + "<br>" +
+          "Total: " + t.total + "<br>" +
+          "Grade: " + t.grade + "<br>" +
+          "Remark: " + t.remark;
+      }
+
+      document.getElementById("footer").innerHTML =
+        "Created by <b>Shreya Bansal</b> | Date: 14th | Time: 10:30 AM<br>" +
+        "Fun Fact about my teammate: My teammate never forgets to bring a pen to class ✍️";
+    }
+  </script>
+</body>
+</html>

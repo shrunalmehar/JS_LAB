@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NPC Reaction</title>
+</head>
+<body>
+  <script>
+    let health = parseInt(prompt("Enter player's current health (0 to 100):"));
+    let reputation = parseInt(prompt("Enter player's reputation (-50 to +50):"));
+    let inventory = prompt("Enter an item in player's inventory (e.g., sword):").toLowerCase();
+    let previousHealth = parseInt(prompt("Enter player's previous health (to check if they just healed):"));
+
+    let reaction = "";
+
+    if (health <= 30 && reputation >= 30) {
+      reaction = "You look hurt, hero. Let me help you.";
+    }
+    else if (reputation <= -45 && inventory === "sword") {
+      reaction = "I don't trust you... but that sword... it's legendary.";
+    }
+    else if (previousHealth <= 30 && health > previousHealth) {
+      reaction = "Ah, you're healing up! Stay strong.";
+    }
+    else {
+      reaction = "Hello, traveler. Safe journeys ahead.";
+    }
+
+    console.log(reaction);
+  </script>
+</body>
+</html>

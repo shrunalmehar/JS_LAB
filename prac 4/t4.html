@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+   try {
+let fileOpen = true;
+console.log("Opening file...");
+// Simulate an error
+throw new Error("File read error!");
+console.log("Reading file..."); // this line will not run
+}
+catch (err)
+{
+console.log("Error:", err.message);
+}
+finally
+{
+console.log("Closing file (cleanup)...");
+
+}
+    </script>
+</body>
+</html>

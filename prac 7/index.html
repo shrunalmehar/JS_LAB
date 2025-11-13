@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task 1: Add to List</title>
+</head>
+<body>
+  <input type="text" id="itemInput">
+  <button id="addBtn">Add</button>
+  <ul id="taskList"></ul>
+  <script>
+    document.getElementById('addBtn').onclick = function() {
+      let val = document.getElementById('itemInput').value;
+      if (val) {
+        let li = document.createElement('li');
+        li.textContent = val;
+        document.getElementById('taskList').appendChild(li);
+        document.getElementById('itemInput').value = '';
+      }
+    };
+  </script>
+</body>
+</html>

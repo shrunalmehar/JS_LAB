@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task1</title>
+</head>
+<body>
+    <script>const student = {
+  name: "Riya",
+  rollNo: 101,
+  marks: {
+    math: 85,
+    science: 90,
+    english: 78,
+    history: 88,
+    art: 92
+  }
+};
+
+const { name, rollNo, marks } = student;
+const { math, science, english, history, art } = marks;
+
+const total = math + science + english + history + art;
+const percentage = (total / 500) * 100;
+const report = `
+Report Card for ${name} (Roll No: ${rollNo})
+Subjects: Math: ${math}, Science: ${science}, English: ${english}, History: ${history}, Art: ${art}
+Total Marks: ${total}
+Percentage: ${percentage.toFixed(1)}%
+`;
+
+console.log(report);
+</script>
+</body>
+</html>

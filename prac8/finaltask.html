@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gym Admission Form</title>
+<style>
+  body{
+  font-family:Arial,sans-serif;
+  background:#f2f2f2;
+  }
+  form{
+  background:#fff;
+  padding:20px;
+  margin:30px auto;
+  width:400px;
+  border-radius:8px;
+  box-shadow:0 0 10px rgba(0,0,0,0.1);
+  }
+  label{
+  display:block;
+  margin-top:10px;
+  }
+  input,select{
+  width:100%;
+  padding:8px;
+  margin-top:5px;
+  border:1px solid #ccc;
+  border-radius:5px;
+  outline:none;
+  transition:border-color 0.3s;
+  }
+  .msg{
+  font-size:13px;
+  margin-top:3px;
+  height:15px;
+  }
+  .error{
+  color:red;
+  }
+  .valid{
+  color:green;
+  }
+  .warning{
+  color:orange;
+  }
+  button{
+  margin-top:15px;
+  padding:10px;
+  width:48%;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+  }
+  #submitBtn{
+  background:#4CAF50;
+  color:#fff;
+  }
+  #resetBtn{
+  background:#999;
+  color:#fff;
+  }
+  #successMsg{
+  text-align:center;
+  color:green;
+  font-weight:bold;
+  margin-top:15px;
+  }
+</style>
+</head>
+<body>
+<form id="gymForm" name="gymForm" novalidate>
+<h2 style="text-align:center;">FitZone Gym Admission Form</h2>
+
+<label>Full Name:</label>
+<input type="text" id="fullName" name="fullName" required>
+<div class="msg" id="nameMsg"></div>
+
+<label>Email:</label>
+<input type="email" id="email" name="email" required>
+<div class="msg" id="emailMsg"></div>
+
+<label>Age:</label>
+<input type="number" id="age" name="age" required>
+<div class="msg" id="ageMsg"></div>
+
+<label>Gender:</label>
+<input type="radio" name="gender" value="Male"> Male
+<input type="radio" name="gender" value="Female"> Female
+<input type="radio" name="gender" value="Other"> Other
+<div class="msg" id="genderMsg"></div>
+
+<label>Membership Type:</label>
+<select id="membership" name="membership">
+  <option value="">-- Select --</option>
+  <option value="Monthly">Monthly</option>
+  <option value="Quarterly">Quarterly</option>
+  <option value="Yearly">Yearly</option>
+</select>
+<div class="msg" id="membershipMsg"></div>
+
+<label>Password:</label>
+<input type="password" id="password" name="password" required>
+<div class="msg" id="passwordMsg"></div>
+
+<label>Confirm Password:</label>
+<input type="password" id="confirmPassword" name="confirmPassword" required>
+<div class="msg" id="confirmMsg"></div>
+
+<label>Phone:</label>
+<input type="text" id="phone" name="phone" required>
+<div class="msg" id="phoneMsg"></div>
+
+<label>Date of Birth:</label>
+<input type="date" id="dob" name="dob" required>
+<div class="msg" id="dobMsg"></div>
+
+<label>Profile Photo:</label>
+<input type="file" id="photo" name="photo" accept=".jpg,.png" required>
+<div class="msg" id="photoMsg"></div>
+
+<label><input type="checkbox" id="terms" name="terms"> I agree to the Terms & Conditions</label>
+<div class="msg" id="termsMsg"></div>
+
+<div style="text-align:center;">
+  <button type="submit" id="submitBtn">Submit</button>
+  <button type="reset" id="resetBtn">Reset</button>
+</div>
+<div id="successMsg"></div>
+</form>
+
+<script>
+const form = document.getElementById("gymForm");
+
+function setValidation(input, message, valid, state) {
+  input.style.borderColor = state === "valid" ? "green" :
+                            state === "warning" ? "orange" : "red";
+  const msg = document.getElementById(input.id + "Msg");
+  msg.textContent = message;
+  msg.className = "msg " + state;
+}
+
+const fullName = document.getElementById("fullName");
+fullName.oninput = function() {
+  const valid = /^[A-Za-z\s]{3,}$/.test(this.value.trim());
+  setValidation(this, valid ? "Looks good!" : "Only alphabets, min 3 chars", true, valid ? "valid" : "error");
+};
+
+const email = document.getElementById("email");
+email.oninput = function() {
+  const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value.trim());
+  setValidation(this, valid ? "Valid email" : "Enter valid email", true, valid ? "valid" : "error");
+};
+
+const age = document.getElementById("age");
+age.oninput = function() {
+  const val = parseInt(this.value);
+  const valid = val >= 18 && val <= 60;
+  setValidation(this, valid ? "Valid age" : "Age must be 18-60", true, valid ? "valid" : "error");
+};
+
+const genders = document.getElementsByName("gender");
+genders.forEach(radio => {
+  radio.onchange = function() {
+    const msg = document.getElementById("genderMsg");
+    msg.textContent = "Gender selected";
+    msg.className = "msg valid";
+  };
+});
+
+const membership = document.getElementById("membership");
+membership.onchange = function() {
+  const valid = this.value !== "";
+  setValidation(this, valid ? "Membership selected" : "Please select a membership", true, valid ? "valid" : "error");
+};
+
+const password = document.getElementById("password");
+password.oninput = function() {
+  const val = this.value;
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/;
+  if (val.length < 5) setValidation(this, "Too short", true, "error");
+  else if (val.length < 10 || !regex.test(val)) setValidation(this, "Needs upper, lower, number, special char", true, "warning");
+  else setValidation(this, "Strong password", true, "valid");
+};
+
+const confirmPassword = document.getElementById("confirmPassword");
+confirmPassword.oninput = function() {
+  const valid = this.value === password.value && password.value !== "";
+  setValidation(this, valid ? "Passwords match" : "Passwords do not match", true, valid ? "valid" : "error");
+};
+
+const phone = document.getElementById("phone");
+phone.oninput = function() {
+  const valid = /^\d{10}$/.test(this.value);
+  setValidation(this, valid ? "Valid phone number" : "Must be 10 digits", true, valid ? "valid" : "error");
+};
+
+const dob = document.getElementById("dob");
+dob.onchange = function() {
+  const today = new Date().toISOString().split("T")[0];
+  const valid = this.value && this.value <= today;
+  setValidation(this, valid ? "Valid date" : "Date cannot be in future", true, valid ? "valid" : "error");
+};
+
+const photo = document.getElementById("photo");
+photo.onchange = function() {
+  const file = this.files[0];
+  if (!file) return;
+  const validType = ["image/jpeg", "image/png"].includes(file.type);
+  const validSize = file.size <= 1024 * 1024;
+  setValidation(this, validType && validSize ? "Valid file" : "Only JPG/PNG under 1MB", true, validType && validSize ? "valid" : "error");
+};
+
+const terms = document.getElementById("terms");
+terms.onchange = function() {
+  const msg = document.getElementById("termsMsg");
+  if (this.checked) {
+    msg.textContent = "Accepted";
+    msg.className = "msg valid";
+  } else {
+    msg.textContent = "Please accept terms";
+    msg.className = "msg error";
+  }
+};
+
+form.onsubmit = function(e) {
+  e.preventDefault();
+  const invalid = form.querySelector(".error");
+  if (invalid && invalid.textContent !== "") {
+    alert("Please correct all errors before submitting.");
+    return;
+  }
+  document.getElementById("successMsg").textContent = "Form submitted successfully! Welcome to FitZone Gym.";
+};
+
+form.onreset = function() {
+  document.querySelectorAll(".msg").forEach(m => m.textContent = "");
+  document.querySelectorAll("input, select").forEach(el => el.style.borderColor = "#ccc");
+  document.getElementById("successMsg").textContent = "";
+};
+</script>
+
+</body>
+</html>

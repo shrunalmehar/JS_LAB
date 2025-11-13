@@ -1,0 +1,9 @@
+<button onclick="addTask()">Add Task</button>
+<ul id="list"></ul>
+<script>
+function addTask() {
+const li = document.createElement('li');
+li.textContent = 'New Task';
+document.getElementById('list').appendChild(li);
+}
+</script>
